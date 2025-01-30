@@ -1,0 +1,34 @@
+{
+	"programming_languages" : {
+			"Python": "(python)",
+			"JavaScript": "(javascript|js)",
+      "TypeScript": "(typescript)",
+			"Java": "(java)(?!script)",
+			"C#": "(c#|csharp)",
+			"Rust": "(rust)"
+			},
+	"frameworks_libraries" : {
+			"ReactJS": "(react.js|reactjs|react)",
+			"Angular": "(angularjs|angular)",
+			"Vue": "(vue|vuejs|vue.js)",
+			"TensorFlow": "(tensorflow)",
+			"PyTorch": "(pytorch)"
+			},
+	"cloud_platforms" : {
+			"AWS" : "(aws|amazon web service)",
+			"Azure" : "(azure)",
+			"Google Cloud" : "(gcp|google cloud)",
+			"Kubernetes" : "(kubernetes|k8s)",
+			"Docker" : "(docker)"
+			},
+	"databases" : {
+			"PostgreSQL": "(postgresql|postgres)",
+			"MySQL": "(mysql)",
+			"MongoDB": "(mongodb)"
+			},
+	"tools" : {
+			"Jenkins": "(jenkins)",
+			"Git": "(git|github)",
+			"Jira": "(jira)"
+			}
+}
