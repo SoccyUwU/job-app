@@ -10,7 +10,12 @@ class techJobClassifier:
         with open("keywords.json") as file:
             self.keyword_patterns = json.load(file)
 
+        # initialize ai models
+        self.tokenizer = BartTokenizerFast.from_pretrained("facebook/bart-large-cnn")
+        self.model = BartForConditionalGeneration.from_pretrained("facebook/bart-large-cnn")
+
     def extract_technologies(self, text):
+        """Extract technologies by searching for pre-defined keywords (see keywords.json) in the given text."""
         results = defaultdict(list)
 
         text_lower = text.lower()
@@ -23,7 +28,8 @@ class techJobClassifier:
         return dict(results)
 
     def process_batch(self, job_postings, output_file='tech_classifications.csv'):
-        """Process a batch of job postings and save results to CSV."""
+        """Process a batch of job postings and save results to CSV.
+            Job listings should be a list of strings, each string the job description."""
         results = []
         
         for idx, posting in enumerate(job_postings):
@@ -51,13 +57,10 @@ class techJobClassifier:
     def summarize(self, text):
         print("Starting AI summarization")
 
-        tokenizer = BartTokenizerFast.from_pretrained("facebook/bart-large-cnn")
-        model = BartForConditionalGeneration.from_pretrained("facebook/bart-large-cnn")
-
-        inputs = tokenizer(text, max_length = 1024, truncation = True, return_tensors = 'pt')
+        inputs = self.tokenizer(text, max_length = 1024, truncation = True, return_tensors = 'pt')
         # Length_penalty >1 encourages longer outputs
-        summary_ids = model.generate(inputs['input_ids'], min_length = 100, max_length = 300, length_penalty = 2.0, num_beams = 4, early_stopping = True)
-        summary = tokenizer.decode(summary_ids[0], skip_special_tokens = True)
+        summary_ids = self.model.generate(inputs['input_ids'], min_length = 100, max_length = 300, length_penalty = 2.0, num_beams = 2, early_stopping = True)
+        summary = self.tokenizer.decode(summary_ids[0], skip_special_tokens = True)
         
         return summary
 
